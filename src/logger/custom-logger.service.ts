@@ -1,41 +1,30 @@
-import { Injectable } from '@nestjs/common';
-import { Logger } from 'nestjs-pino';
-import * as pino from 'pino';
+import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class CustomLogger extends Logger {
-  private readonly logger: pino.Logger;
-
-  constructor() {
-    super();
-    this.logger = pino({
-      prettyPrint: true,
-    });
-  }
-
   log(message: any, ...optionalParams: any[]) {
     const maskedMessage = this.maskSensitiveData(message);
-    this.logger.info(maskedMessage, ...optionalParams);
+    super.log(maskedMessage, ...optionalParams);
   }
 
   error(message: any, ...optionalParams: any[]) {
     const maskedMessage = this.maskSensitiveData(message);
-    this.logger.error(maskedMessage, ...optionalParams);
+    super.error(maskedMessage, ...optionalParams);
   }
 
   warn(message: any, ...optionalParams: any[]) {
     const maskedMessage = this.maskSensitiveData(message);
-    this.logger.warn(maskedMessage, ...optionalParams);
+    super.warn(maskedMessage, ...optionalParams);
   }
 
   debug(message: any, ...optionalParams: any[]) {
     const maskedMessage = this.maskSensitiveData(message);
-    this.logger.debug(maskedMessage, ...optionalParams);
+    super.debug(maskedMessage, ...optionalParams);
   }
 
   verbose(message: any, ...optionalParams: any[]) {
     const maskedMessage = this.maskSensitiveData(message);
-    this.logger.trace(maskedMessage, ...optionalParams);
+    super.verbose(maskedMessage, ...optionalParams);
   }
 
   private maskSensitiveData(data: any): any {
